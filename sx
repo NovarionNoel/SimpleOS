@@ -1,0 +1,382 @@
+SZ(1)                                 General Commands Manual                                 SZ(1)
+
+NNAAMMEE
+       sx, sb, sz - XMODEM, YMODEM, ZMODEM file send
+
+SSYYNNOOPPSSIISS
+       sz [-++88aabbddeeffkkLLllNNnnooppqqTTttuuvvyyYY] _f_i_l_e _._._.
+       sb [-aaddffkkqqttuuvv] _f_i_l_e _._._.
+       sx [-aakkqqttuuvv] _f_i_l_e
+       sz [-ooqqttvv] --cc CCOOMMMMAANNDD
+       sz [-ooqqttvv] --ii CCOOMMMMAANNDD
+       sz -TT
+
+DDEESSCCRRIIPPTTIIOONN
+       SSzz  uses  the  ZMODEM,  YMODEM or XMODEM error correcting protocol to send one or more files
+       over a dial-in serial port to a variety of programs running under PC-DOS, CP/M,  Unix,  VMS,
+       and other operating systems.
+
+       While  _r_z  is  smart  enough  to  be called from _c_u_(_1_)_, very few versions of _c_u_(_1_) are smart
+       enough to allow _s_z to work properly.  Unix flavors of  Professional-YAM  are  available  for
+       such dial-out application.
+
+       SSzz sends one or more files with ZMODEM protocol.
+
+       ZMODEM greatly simplifies file transfers compared to XMODEM.  In addition to a friendly user
+       interface, ZMODEM provides Personal Computer and other users an efficient, accurate, and ro‐
+       bust file transfer method.
+
+       ZMODEM  provides  complete EENNDD--TTOO--EENNDD data integrity between application programs.  ZMODEM's
+       32 bit CRC catches errors that sneak into even the most advanced networks.
+
+       Advanced file management features include AutoDownload (Automatic  file  Download  initiated
+       without  user  intervention),  Display of individual and total file lengths and transmission
+       time estimates, Crash Recovery, selective file transfers, and  preservation  of  exact  file
+       date and length.
+
+       Output  from  another program may be piped to sszz for transmission by denoting standard input
+       with "-":
+                                               ls -l | sz -
+       The program output is transmitted with the filename sPID.sz where PID is the process  ID  of
+       the  sszz  program.   If the environment variable OONNAAMMEE is set, that is used instead.  In this
+       case, the Unix command:
+                                        ls -l | ONAME=con sz -ay -
+       will send a "file" to the PC-DOS console display.  The --yy option instructs the  receiver  to
+       open  the  file  for  writing unconditionally.  The --aa option causes the receiver to convert
+       Unix newlines to PC-DOS carriage returns and linefeeds.
+
+       SSbb batch sends one or more files with YMODEM or ZMODEM protocol.  The  initial  ZMODEM  ini‐
+       tialization is not sent.  When requested by the receiver, ssbb supports YYMMOODDEEMM--gg with "cbreak"
+       tty mode, XON/XOFF flow control, and interrupt character set to CAN (^X).  YYMMOODDEEMM--gg (Profes‐
+       sional-YAM gg option) increases throughput over error free channels (direct connection, X.PC,
+       etc.)  by not acknowledging each transmitted sector.
+
+       On Unix systems, additional information about the file is  transmitted.   If  the  receiving
+       program  uses  this  information,  the  transmitted file length controls the exact number of
+       bytes written to the output dataset, and the modify time and file mode are set accordingly.
+
+       SSxx sends a single _f_i_l_e with XXMMOODDEEMM or XXMMOODDEEMM--11kk protocol (sometimes incorrectly called "ymo‐
+       dem").  The user must supply the file name to both sending and receiving programs.
+
+       If  sszz  is  invoked with $SHELL set and iff that variable contains the string _r_s_h , _r_b_a_s_h or
+       _r_k_s_h (restricted shell), sszz operates in restricted mode.  Restricted  mode  restricts  path‐
+       names to the current directory and PUBDIR (usually /usr/spool/uucppublic) and/or subdirecto‐
+       ries thereof.
+
+       The fourth form sends a single COMMAND to a ZMODEM receiver for execution.   SSzz  exits  with
+       the COMMAND return value.  If COMMAND includes spaces or characters special to the shell, it
+       must be quoted.
+
+       The fifth form sends a single COMMAND to a ZMODEM receiver for execution.  SSzz exits as  soon
+       as the receiver has correctly received the command, before it is executed.
+
+       The  sixth  form  (sz -TT) attempts to output all 256 code combinations to the terminal.  In
+       you are having difficulty sending files, this command lets you see which character codes are
+       being eaten by the operating system.
+
+       If  sszz is invoked with stdout and stderr to different datasets, Verbose is set to 2, causing
+       frame by frame progress reports to stderr.  This may be disabled with the qq option.
+
+       The meanings of the available options are:
+
+       --++,, ----aappppeenndd
+              Instruct the receiver to append transmitted data to an existing file (ZMODEM only).
+       --22,, ----ttwwoossttoopp
+              use two stop bits (if possible). Do not use this unless you know what you are doing.
+       --88,, ----ttrryy--88kk
+              Try to go up to 8KB blocksize. This is incompatible with standard zmodem, but a  com‐
+              mon extension in the bbs world. (ZMODEM only).
+       ----ssttaarrtt--88kk
+              Start with 8KB blocksize. Like --try-8k.
+       --aa,, ----aasscciiii
+              Convert  NL  characters in the transmitted file to CR/LF.  This is done by the sender
+              for XMODEM and YMODEM, by the receiver for ZMODEM.
+       --bb,, ----bbiinnaarryy
+              (ZMODEM) Binary override: transfer file without any translation.
+       --BB NNUUMMBBEERR,, ----bbuuffssiizzee NNUUMMBBEERR
+              Use a readbuffer of NNUUMMBBEERR bytes. Default ist 16384, which should be enough for  most
+              situations.  If  you have a slow machine or a bad disk interface or suffer from other
+              hardware problems you might want to increase the buffersize.  --11 or aauuttoo use a buffer
+              large  enough to buffer the whole file. Be careful with this option - things normally
+              get worse, not better, if the machine starts to swap.
+
+              Using this option turns of memory mapping of the input file.  This  increases  memory
+              and cpu usage.
+       --cc CCOOMMMMAANNDD,, ----ccoommmmaanndd CCOOMMMMAANNDD
+              Send COMMAND to the receiver for execution, return with COMMAND´s exit status.
+       --CC NN,, ----ccoommmmaanndd--ttrriieess NN
+              Retry to send command N times (default: 11).
+       --dd,, ----ddoott--ttoo--ssllaasshh
+              Change  all  instances  of "." to "/" in the transmitted pathname.  Thus, C.omenB0000
+              (which is unacceptable to MSDOS or CP/M) is transmitted as C/omenB0000.  If  the  re‐
+              sultant filename has more than 8 characters in the stem, a "." is inserted to allow a
+              total of eleven.
+
+              This option enables the ----ffuullll--ppaatthh option.
+       ----ddeellaayy--ssttaarrttuupp NN
+              Wait NN seconds before doing anything.
+       --ee,, ----eessccaappee
+              Escape all control characters; normally XON, XOFF, DLE, CR-@-CR, and Ctrl-X  are  es‐
+              caped.
+       --EE,, ----rreennaammee
+              Force the sender to rename the new file if a file with the same name already exists.
+       --ff,, ----ffuullll--ppaatthh
+              Send  Full  pathname.   Normally directory prefixes are stripped from the transmitted
+              filename.
+
+              This is also turned on with to ----ddoott--ttoo--ssllaasshh option.
+       --hh,, ----hheellpp
+              give help.
+       --ii CCOOMMMMAANNDD,, ----iimmmmeeddiiaattee--ccoommmmaanndd CCOOMMMMAANNDD
+              Send COMMAND to the receiver for execution, return  immediately  upon  the  receiving
+              program's successful reception of the command.
+       --kk,, ----11kk
+              (XMODEM/YMODEM)  Send  files  using 1024 byte blocks rather than the default 128 byte
+              blocks.  1024 byte packets speed file transfers at high bit rates.   (ZMODEM  streams
+              the data for the best possible throughput.)
+       --LL NN,, ----ppaacckkeettlleenn NN
+              Use  ZMODEM  sub-packets  of  length  N.  A larger N (32 <= N <= 1024) gives slightly
+              higher throughput, a smaller N speeds error recovery.  The default is 128  below  300
+              baud, 256 above 300 baud, or 1024 above 2400 baud.
+       --mm NN,, ----mmiinn--bbppss NN
+              Stop  transmission  if  BPS-Rate  (Bytes Per Second) falls below N for a certain time
+              (see --min-bps-time option).
+       --MM NN,, ----mmiinn--bbppss--ttiimmee
+              Used together with --min-bps. Default is 120 (seconds).
+       --ll NN,, ----ffrraammeelleenn NN
+              Wait for the receiver to acknowledge correct data every NN (32 <= N <=  1024)  charac‐
+              ters.  This may be used to avoid network overrun when XOFF flow control is lacking.
+       --nn,, ----nneewweerr
+              (ZMODEM)  Send  each  file if destination file does not exist.  Overwrite destination
+              file if source file is newer than the destination file.
+       --NN,, ----nneewweerr--oorr--lloonnggeerr
+              (ZMODEM) Send each file if destination file does not  exist.   Overwrite  destination
+              file if source file is newer or longer than the destination file.
+       --oo,, ----1166--bbiitt--ccrrcc
+              (ZMODEM) Disable automatic selection of 32 bit CRC.
+       --OO,, ----ddiissaabbllee--ttiimmeeoouuttss
+              Disable  read  timeout  handling.  This makes lsz hang if the other side doesn't send
+              anything, but increases performance (not much) and  decreases  system  load  (reduces
+              number of system calls by about 50 percent).
+
+              Use this option with care.
+       --pp,, ----pprrootteecctt
+              (ZMODEM)  Protect  existing destination files by skipping transfer if the destination
+              file exists.
+       --qq,, ----qquuiieett
+              Quiet suppresses verbosity.
+       --RR,, ----rreessttrriicctteedd
+              Restricted mode: restricts pathnames to the current  directory  and  PUBDIR  (usually
+              /usr/spool/uucppublic) and/or subdirectories thereof.
+       --rr,, ----rreessuummee
+              (ZMODEM)  Resume  interrupted  file  transfer.  If the source file is longer than the
+              destination file, the transfer commences at the offset in the source file that equals
+              the length of the destination file.
+       --ss HHHH::MMMM,, ----ssttoopp--aatt HHHH::MMMM
+              Stop  transmission  at  HHHH  hours,  MMMM  minutes. Another variant, using ++NN instead of
+              HHHH::MMMM,, stops transmission in NN seconds.
+       --SS,, ----ttiimmeessyynncc
+              enable timesync protocol support. See timesync.doc for further information.
+
+              This option is incompatible with standard zmodem. Use it with care.
+       ----ssyysslloogg[[==ooffff]]
+              turn syslogging on or off. the default is set at configure time.  This option is  ig‐
+              nored if no syslog support is compiled in.
+       --tt TTIIMM,, ----ttiimmeeoouutt TTIIMM
+              Change timeout to _T_I_M tenths of seconds.
+       --TT,, ----ttuurrbboo
+              Do  not  escape  certain  characters (^P, ^P|0x80, telenet escape sequence [CR + @]).
+              This improves performance by about 1 percent and shouldn't hurt in  the  normal  case
+              (but be careful - ^P might be useful if connected through a terminal server).
+       ----ttccpp  Try  to  initiate  a  TCP/IP  connection. lsz will ask the receiving zmodem to open a
+              TCP/IP connection. All handshaking (which address / port to use) will be done by  the
+              zmodem programs.
+
+              You  will  normally not want to use this option as lrzsz is the only zmodem which un‐
+              derstands what to do (private extension). You might want to use this  option  if  the
+              two  programs  are  connected (stdin/out) over a slow or bad (not 8bit clean) network
+              connection.
+
+              Use of this option imposes a security risk, somebody else could connect to  the  port
+              in between. See SSEECCUURRIITTYY for details.
+       ----ttccpp--cclliieenntt AADDDDRREESSSS::PPOORRTT
+              Act as a tcp/ip client: Connect to the given port.
+
+              See ----ttccpp--sseerrvveerr for more information.
+
+       ----ttccpp--sseerrvveerr
+              Act as a server: Open a socket, print out what to do, wait for connection.
+
+              You  will  normally not want to use this option as lrzsz is the only zmodem which un‐
+              derstands what to do (private extension). You might want to use this if you  have  to
+              use  zmodem (for which reason whatever), and cannot use the ----ttccpp option of _l_s_z (per‐
+              haps because your telnet doesn't allow to spawn a  local  program  with  stdin/stdout
+              connected to the remote side).
+
+              If  you  use this option you have to start _l_s_z with the ----ttccpp--cclliieenntt AADDDDRREESSSS::PPOORRTT op‐
+              tion.  _l_r_z _w_i_l_l _p_r_i_n_t _t_h_e _a_d_d_r_e_s_s _a_n_d _p_o_r_t _o_n _s_t_a_r_t_u_p_.
+
+              Use of this option imposes a security risk, somebody else could connect to  the  port
+              in between. See SSEECCUURRIITTYY for details.
+
+       --uu     Unlink the file after successful transmission.
+       --UU,, ----uunnrreessttrriicctt
+              Turn off restricted mode (this is not possible if running under a restricted shell).
+       --ww NN,, ----wwiinnddoowwssiizzee NN
+              Limit the transmit window size to N bytes (ZMODEM).
+       --vv,, ----vveerrbboossee
+              Verbose output to stderr. More v's generate more output.
+       --XX,, ----xxmmooddeemm
+              use XMODEM protocol.
+       --yy,, ----oovveerrwwrriittee
+              Instruct  a  ZMODEM  receiving  program  to overwrite any existing file with the same
+              name.
+       --YY,, ----oovveerrwwrriittee--oorr--sskkiipp
+              Instruct a ZMODEM receiving program to overwrite any  existing  file  with  the  same
+              name,  and to skip any source files that do have a file with the same pathname on the
+              destination system.
+       ----yymmooddeemm
+              use ZMODEM protocol.
+       --ZZ,, ----zzmmooddeemm
+              use ZMODEM protocol.
+
+SSEECCUURRIITTYY
+       Restricted  mode  restricts  pathnames  to  the  current  directory  and   PUBDIR   (usually
+       /var/spool/uucppublic) and/or subdirectories thereof, and disables remote command execution.
+
+       Restricted  mode  is entered if the RR option is given or if lsz detects that it runs under a
+       restricted shell or if the environment variable ZMODEM_RESTRICTED is found.
+
+       Restricted mode can be turned of with the UU option if not running under a restricted shell.
+
+       Use of the
+              ----ttccpp--cclliieenntt or ----ttccpp--sseerrvveerr options imposes a security risk, as somebody else  could
+              connect  to  the  port before you do it, and grab your data. If there's strong demand
+              for a more secure mode i might introduce some sort of password challenge.
+
+EENNVVIIRROONNMMEENNTT
+       ZZNNUULLLLSS may be used to specify the number of nulls to send before a ZDATA frame.
+
+       SSHHEELLLL  lsz recognizes a restricted shell if this variable includes _r_s_h or _r_k_s_h
+
+       ZZMMOODDEEMM__RREESSTTRRIICCTTEEDD
+              lrz enters restricted mode if the variable is set.
+
+       TTMMPPDDIIRR If this environment variable is set its content is used as the directory to place  in
+              the  answer  file to a ttiimmeessyynncc request.  TTMMPP Used instead of TMPDIR if TMPDIR is not
+              set. If neither TMPDIR nor TMP is set /tmp will be used.
+
+EEXXAAMMPPLLEESS
+       ZZMMOODDEEMM FFiillee TTrraannssffeerr (Unix to DSZ/ZCOMM/Professional-YAM)
+       %% sszz --aa **..cc
+       This single command transfers all .c files in the current  Unix  directory  with  conversion
+       (--aa)  to  end  of  line  conventions  appropriate to the receiving environment.  With ZMODEM
+       AutoDownload enabled, Professional-YAM  and ZCOMM will automatically receive the files after
+       performing a security check.
+
+       %% sszz --YYaann **..cc **..hh
+       Send  only the .c and .h files that exist on both systems, and are newer on the sending sys‐
+       tem than the corresponding version on the receiving system, converting Unix to DOS text for‐
+       mat.
+       $$ sszz --\\YYaann ffiillee11..cc ffiillee22..cc ffiillee33..cc ffoooo..hh bbaazz..hh ®(for VMS)
+
+       ZZMMOODDEEMM CCoommmmaanndd DDoowwnnllooaadd (Unix to Professional-YAM)
+        cpszall:all
+           sz -c "c:;cd /yam/dist"
+           sz -ya $(YD)/*.me
+           sz -yqb y*.exe
+           sz -c "cd /yam"
+           sz -i "!insms"
+       This  Makefile fragment uses sszz to issue commands to Professional-YAM to change current disk
+       and directory.  Next, sszz transfers the _._m_e files from the $YD directory, commanding the  re‐
+       ceiver to overwrite the old files and to convert from Unix end of line conventions to PC-DOS
+       conventions.  The third line transfers some _._e_x_e files.  The fourth and fifth lines  command
+       Pro-YAM  to  change  directory and execute a PC-DOS batch file _i_n_s_m_s _.  Since the batch file
+       takes considerable time, the --ii form is used to allow sszz to exit immediately.
+
+       XXMMOODDEEMM FFiillee TTrraannssffeerr (Unix to Crosstalk)
+       % ssxx --aa ffoooo..cc
+       EESSCC
+       rrxx ffoooo..cc
+       The above three commands transfer a single file from Unix to a  PC  and  Crosstalk  with  _s_z
+       translating  Unix newlines to DOS CR/LF.  This combination is much slower and far less reli‐
+       able than ZMODEM.
+
+EERRRROORR MMEESSSSAAGGEESS
+       "Caught signal 99" indicates the program was not properly compiled, refer to  "bibi(99)"  in
+       rbsb.c for details.
+
+SSEEEE AALLSSOO
+       rz(omen),   ZMODEM.DOC,  YMODEM.DOC,  Professional-YAM,  crc(omen),  sq(omen),  todos(omen),
+       tocpm(omen), tomac(omen), yam(omen)
+
+       Compile time options required for various operating systems  are  described  in  the  source
+       file.
+
+VVMMSS VVEERRSSIIOONN
+       The  VMS version does not support wild cards.  Because of VMS DCL, upper case option letters
+       must be represented by \ preceding the letter.
+
+       The current VMS version does not support XMODEM, XMODEM-1k, or YMODEM.
+
+       VMS C Standard I/O and RMS may interact to modify the file contents.
+
+FFIILLEESS
+       32 bit CRC code courtesy Gary S. Brown.
+
+       sz.c, crctab.c, rbsb.c, zm.c, zmodem.h Unix source files
+
+       sz.c, crctab.c, vrzsz.c, zm.c, zmodem.h, vmodem.h, vvmodem.c, VMS source files.
+
+       /tmp/szlog stores debugging output (sz -vv) (szlog on VMS).
+
+TTEESSTTIINNGG FFEEAATTUURREE
+       The command "sz -T file" exercises the AAttttnn sequence error  recovery  by  commanding  errors
+       with  unterminated  packets.   The receiving program should complain five times about binary
+       data packets being too long.  Each time sszz is interrupted, it should  send  a  ZDATA  header
+       followed  by another defective packet.  If the receiver does not detect five long data pack‐
+       ets, the AAttttnn sequence is not interrupting the sender, and the MMyyaattttnn string in sszz..cc must be
+       modified.
+
+       After  5  packets,  sszz stops the "transfer" and prints the total number of characters "sent"
+       (Tcount).  The difference between Tcount and 5120 represents the number of characters stored
+       in various buffers when the Attn sequence is generated.
+
+BBUUGGSS
+       Calling  _s_z  from most versions of cu(1) doesn't work because cu's receive process fights _s_z
+       for characters from the modem.
+
+       On at least one BSD system, sz would hang or exit when it got within a few kilobytes of  the
+       end  of  file.  Using the "-w 8192" flag fixed the problem.  The real cause is unknown, per‐
+       haps a bug in the kernel TTY output routines.
+
+       Programs that do not properly implement the specified file transfer protocol may cause _s_z to
+       "hang"  the port for a minute or two.  This problem is corrected by using ZCOMM, Pro-YAM, or
+       other program with a correct implementation of the specified protocol.
+
+       Many programs claiming to support YMODEM only support XMODEM with 1k blocks, and they  often
+       don't get that quite right.
+
+       XMODEM  transfers  add  up to 127 garbage bytes per file.  XMODEM-1k and YMODEM-1k transfers
+       use 128 byte blocks to avoid extra padding.
+
+       YMODEM programs use the file length transmitted at the beginning of the  transfer  to  prune
+       the  file  to the correct length; this may cause problems with source files that grow during
+       the course of the transfer.  This problem does not pertain to ZMODEM transfers,  which  pre‐
+       serve the exact file length unconditionally.
+
+       Most  ZMODEM  options  are merely passed to the receiving program; some do not implement all
+       these options.
+
+       Circular buffering and a ZMODEM sliding window should be used when input is from  pipes  in‐
+       stead of acknowledging frames each 1024 bytes.  If no files can be opened, sszz sends a ZMODEM
+       command to echo a suitable complaint; perhaps it should check for the presence of  at  least
+       one  accessible  file  before  getting hot and bothered.  The test mode leaves a zero length
+       file on the receiving system.
+
+       A few high speed modems have a firmware bug that drops characters when the direction of high
+       speed  transmission is reversed.  The environment variable ZNULLS may be used to specify the
+       number of nulls to send before a ZDATA frame.  Values of 101 for a 4.77 mHz PC and  124  for
+       an AT are typical.
+
+lrzsz-0.12b                                   2.6.1996                                        SZ(1)
