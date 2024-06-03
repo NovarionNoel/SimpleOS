@@ -6,7 +6,7 @@ AS = riscv64-unknown-elf-as
 LD = riscv64-unknown-elf-ld
 OBJCOPY = riscv64-unknown-elf-objcopy
 OBJDUMP = riscv64-unknown-elf-objdump
-CFLAGS = -Oz -std=c11 -nostdlib -MMD -march=rv64imafd -mcmodel=medany
+CFLAGS = -Oz -std=c11 -nostdlib -MMD -march=rv64imafd -mcmodel=medany -fno-common
 ASFLAGS =
 LDFLAGS = -T ld/link.ld
 

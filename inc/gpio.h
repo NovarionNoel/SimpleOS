@@ -19,5 +19,7 @@ static GPIO gpio = {
 void set_gpio(uint32_t pin);
 void clear_gpio(uint32_t pin);
 void write_gpio(uint32_t pin, int value);
+uint32_t read_gpio(uint32_t pin);
+void toggle_gpio(uint32_t pin);
 
 #endif
