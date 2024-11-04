@@ -30,10 +30,20 @@ https://www.cs.fsu.edu/~cop4610t/assignments/project3/spec/fatspec.pdf
 
 https://starfivetech.com/uploads/u74mc_core_complex_manual_21G1.pdf
 
+https://www.scs.stanford.edu/~zyedidia/docs/visionfive/visionfive2_qsg.pdf
+
 https://doc-en.rvspace.org/JH7110/TRM/JH7110_TRM/interrupt_connections.html
+
+https://doc-en.rvspace.org/VisionFive2/Boot_UG/VisionFive2_SDK_QSG/boot_mode_settings.html
 
 https://zyedidia.github.io/blog/posts/1-d-baremetal/
 
 https://github.com/yhzhang0128/egos-2000
 
 https://osblog.stephenmarz.com/
+
+https://github.com/mit-pdos/xv6-riscv
+
+https://github.com/zyedidia/multiplix
+
+https://community.ipfire.org/t/starfive-tech-visionfive-2/10510/10
