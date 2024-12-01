@@ -13,6 +13,12 @@ OS Project for Senior Thesis
 - Dupont Lines M/F, M/M, F/F
 - JTAG Probe (In this case, JLink Mini EDU was used)
 
+## Repository Guide
+### Docs 
+    Contains additional documentation for the project including a research paper and videos explaining progress and design for the project.
+### Operating System Code
+    Contains the code for the operating system as well as build tools. The Docs folder has an additional explanation on each directory and portion.
+
 ## References and Resources
 
 Chang, A. (2019, May 27). RISC-V PLIC Specification. GitHub. https://github.com/riscv/riscv-plic-spec/blob/master/riscv-plic.adoc#interrupt-targets-and-hart-contexts 
