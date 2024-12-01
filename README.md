@@ -15,9 +15,9 @@ OS Project for Senior Thesis
 
 ## Repository Guide
 ### Docs 
-    Contains additional documentation for the project including a research paper and videos explaining progress and design for the project.
+Contains additional documentation for the project including a research paper and videos explaining progress and design for the project.
 ### Operating System Code
-    Contains the code for the operating system as well as build tools. The Docs folder has an additional explanation on each directory and portion.
+Contains the code for the operating system as well as build tools. The Docs folder has an additional explanation on each directory and portion.
 
 ## References and Resources
 
